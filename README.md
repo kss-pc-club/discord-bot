@@ -1,7 +1,8 @@
-# [作品名]
-（この `kss-pc-club/template` リポジトリもどんどん変更してください！）
+# discord-bot
 
-## [作品名]とは？
+## discord-bot とは？
+
+KSS PC Club Discord サーバー用の bot です。
 
 ## 開発方法
 1. ---
@@ -19,12 +20,3 @@
 
 ## LICENSE
 MIT License. [LICENSE file](./LICENSE) for more information.
-
-## Todo（終わったら消してください）
- - LICENSE ファイルの3行目の年を今年にする
- - .gitignore ファイルを [github/gitignore](https://github.com/github/gitignore) をもとに作成
- - 以下のファイルを変更
-   - CODE_OF_CONDUCT.md
-   - CONTRIBUTING.md
-   - README.md
-   - SECURITY.md
