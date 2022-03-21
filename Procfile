@@ -1,1 +1,1 @@
-discordbot: yarn start:heroku
+discordbot: yarn compile && yarn start:heroku
