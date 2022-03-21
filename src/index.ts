@@ -1,0 +1,64 @@
+import { Client, Intents, Message } from 'discord.js'
+import admin from 'firebase-admin'
+import dotenv from 'dotenv'
+import Ping from './commands/ping'
+import Register from './commands/register'
+import Update from './commands/update'
+
+dotenv.config();
+
+admin.initializeApp({
+  credential: admin.credential.cert({
+    projectId: process.env.FIREBASE_PROJECT_ID,
+    clientEmail: process.env.FIREBASE_CLIENT_EMAIL,
+    privateKey: process.env.FIREBASE_PRIVATE_KEY?.replace(/\\n/g, '\n')
+  }),
+  databaseURL: process.env.FIREBASE_REALTIME_DB_URL
+});
+
+let db = admin.database();
+let ref = db.ref('members');
+
+const client = new Client({
+  intents: [
+    Intents.FLAGS.GUILDS,
+    Intents.FLAGS.GUILD_MEMBERS,
+    Intents.FLAGS.GUILD_MESSAGES
+  ],
+});
+
+client.once('ready', () => {
+  console.log('[LOG] Bot is ready!');
+  if (!client.user) {
+    console.warn("[WARN] Client user is undefined");
+  }
+  else {
+    console.log(`[LOG] Logged in as ${client.user.tag}`);
+
+    client.user.setStatus('online');
+    // client.user.setActivity('!register', { type: 'PLAYING' });
+  }
+});
+
+ref.on("value", snapshot => {
+    console.log("[LOG] DB: value changed");
+    console.log(snapshot.val());
+  }, 
+  (errorObject: admin.FirebaseError) => {
+    console.log("[LOG] DB: failed " + errorObject.code);
+});
+
+client.on('messageCreate', async (message: Message) => {
+  if (message.author.bot) return;
+  if (message.content.startsWith('!ping')) {
+    Ping(message);
+  }
+  if (message.content.startsWith('!register')) {
+    Register(message, ref);
+  }
+  if (message.content.startsWith('!update')) {
+    Update(message, ref);
+  }
+});
+
+client.login(process.env.TOKEN);
