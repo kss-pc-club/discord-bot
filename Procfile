@@ -1,0 +1,1 @@
+discordbot: yarn start
