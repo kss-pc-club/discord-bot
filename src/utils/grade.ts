@@ -1,10 +1,10 @@
 import ordinal from 'ordinal';
 
-const getRoleName = (grade: number): string => {
+const GetRoleName = (grade: number): string => {
   return grade >= 7 ? `OB/OG` : `${grade}年次`;
 }
 
-const calculateGrade = (enteryear: number): number => {
+const CalculateGrade = (enteryear: number): number => {
   let today = new Date();
   let year = today.getFullYear();
   let month = today.getMonth();  // April is 3
@@ -15,9 +15,9 @@ const calculateGrade = (enteryear: number): number => {
   return grade;
 };
 
-const getGeneration = (enteryear: number): string => {
+const GetGeneration = (enteryear: number): string => {
   let generation = enteryear - 2013 + 1;
   return ordinal(generation);
 };
 
-export { getRoleName, calculateGrade, getGeneration };
+export { GetRoleName, CalculateGrade, GetGeneration };
