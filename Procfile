@@ -1,1 +1,1 @@
-discordbot: yarn start
+discordbot: yarn start:heroku
