@@ -10,6 +10,7 @@
   "scripts": {
     "start": "ts-node src/index.ts",
     "start:heroku": "node dist/index.js",
+    "build": "tsc -p .",
     "compile": "tsc -p .",
     "compile:test": "tsc -p . --noEmit"
   },
