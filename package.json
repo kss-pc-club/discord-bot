@@ -9,6 +9,7 @@
   "private": true,
   "scripts": {
     "start": "ts-node src/index.ts",
+    "start:heroku": "node dist/index.js",
     "compile": "tsc -p .",
     "compile:test": "tsc -p . --noEmit"
   },
