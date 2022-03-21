@@ -1,5 +1,5 @@
 import { Message } from 'discord.js'
-import { getRoleName } from '../utils/grade'
+import { getRoleName } from './grade'
 
 const AddGradeRole = (message: Message, target: string, grade: number) => {
   let roleName = getRoleName(grade);
