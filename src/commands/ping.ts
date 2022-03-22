@@ -6,8 +6,7 @@ const Data: ApplicationCommandData = {
 }
 
 const Response = async (interaction: CommandInteraction) => {
-  // to be implemented
-  // message.channel.send('Pong!');
+  await interaction.reply("Pong!");
 };
 
 export { Data, Response };
