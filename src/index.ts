@@ -16,8 +16,8 @@ admin.initializeApp({
   databaseURL: process.env.FIREBASE_REALTIME_DB_URL
 });
 
-let db = admin.database();
-let ref = db.ref('members');
+const db = admin.database();
+const ref = db.ref('members');
 
 const client = new Client({
   intents: [
@@ -40,13 +40,15 @@ client.once('ready', () => {
   }
 });
 
-ref.on("value", snapshot => {
+ref.on("value",
+  snapshot => {
     console.log("[LOG] DB: value changed");
     console.log(snapshot.val());
-  }, 
+  },
   (errorObject: admin.FirebaseError) => {
     console.log("[LOG] DB: failed " + errorObject.code);
-});
+  }
+);
 
 client.on('messageCreate', async (message: Message) => {
   if (message.author.bot) return;

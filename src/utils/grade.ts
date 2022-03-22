@@ -1,13 +1,12 @@
 import ordinal from 'ordinal';
 
-const GetRoleName = (grade: number): string => {
-  return grade >= 7 ? `OB/OG` : `${grade}年次`;
-}
+const GetRoleName = (grade: number): string =>
+  grade >= 7 ? `OB/OG` : `${grade}年次`;
 
 const CalculateGrade = (enteryear: number): number => {
-  let today = new Date();
-  let year = today.getFullYear();
-  let month = today.getMonth();  // April is 3
+  const today = new Date();
+  const year = today.getFullYear();
+  const month = today.getMonth();  // April is 3
   let grade = year - enteryear + 1;
   if (month < 4) {
     grade--;
@@ -16,7 +15,7 @@ const CalculateGrade = (enteryear: number): number => {
 };
 
 const GetGeneration = (enteryear: number): string => {
-  let generation = enteryear - 2013 + 1;
+  const generation = enteryear - 2013 + 1;
   return ordinal(generation);
 };
 

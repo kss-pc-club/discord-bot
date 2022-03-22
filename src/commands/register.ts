@@ -25,7 +25,7 @@ const Register = (message: Message, ref: admin.database.Reference) => {
       message.channel.send(`ERROR! 指定された値が不正です`);
     }
     else {
-      let child = ref.child(`${message.author.id}`);
+      const child = ref.child(`${message.author.id}`);
       child.set({
         'year': enteryear_num
       });
