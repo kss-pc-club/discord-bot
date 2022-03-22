@@ -1,39 +1,45 @@
-import { Message } from 'discord.js'
+import { ApplicationCommandData, CommandInteraction } from 'discord.js'
 import admin from 'firebase-admin'
 import { GetRoleName, CalculateGrade, GetGeneration } from '../utils/grade'
 import { AddGradeRole } from '../utils/role'
 
-const Register = (message: Message, ref: admin.database.Reference) => {
-  const str = message.content.split(' ');
-  if (str.length < 2) {
-    message.channel.send('ERROR! 引数が足りません');
+const Data: ApplicationCommandData = {
+  name: "register",
+  description: "各学年のロールを割り振ります",
+  options: [{
+    type: "INTEGER",
+    name: "year",
+    description: "入学した年度",
+    required: true,
+    minValue: 2013
+  }]
+}
+
+const Response = async (interaction: CommandInteraction, ref: admin.database.Reference) => {
+  const enteryear = interaction.options.getInteger("year");
+  // optionsでrequired:trueとしているが、一応チェック
+  if (!enteryear) {
+    // ほかの人からは見えない設定
+    await interaction.reply({ content: "ERROR! 年度が指定されていません！", ephemeral: true });
   }
   else {
-    const enteryear = str[1];
-    const enteryear_num = Number(enteryear);
-    const grade = CalculateGrade(enteryear_num);
-
-    let invalidArgument = false;
-    // 数字4桁以外
-    invalidArgument = invalidArgument || !/\d{4}/.test(enteryear)
-    // 来年度以降
-    invalidArgument = invalidArgument || grade <= 0
-    // 1期生より前（2012年以前）
-    invalidArgument = invalidArgument || enteryear_num <= 2012
-
-    if (invalidArgument) {
-      message.channel.send(`ERROR! 指定された値が不正です`);
+    const grade = CalculateGrade(enteryear);
+    // optionsで2012年以前は入力できないようになっているが、念のため
+    // 未来の年度が入力されたとき（grade<=0）もチェック
+    if (enteryear <= 2012 || grade <= 0) {
+      // ほかの人からは見えない設定
+      await interaction.reply({ content: "ERROR! 入学年度が不正です！", ephemeral: true });
     }
     else {
-      const child = ref.child(`${message.author.id}`);
+      const child = ref.child(`${interaction.member?.user.id}`);
       child.set({
-        'year': enteryear_num
+        'year': enteryear
       });
 
-      AddGradeRole(message, message.author.id, grade);
-      message.channel.send(`KSS ${GetGeneration(enteryear_num)} で登録されました！ あなたは現在${GetRoleName(grade)}です。`);
+      AddGradeRole(interaction, interaction.member?.user.id!, grade);
+      await interaction.reply(`KSS ${GetGeneration(enteryear)} で登録されました！ あなたは現在${GetRoleName(grade)}です。`);
     }
   }
 };
 
-export default Register;
+export { Data, Response };

@@ -1,7 +1,12 @@
-import { Message } from 'discord.js'
+import { ApplicationCommandData, CommandInteraction } from 'discord.js'
 
-const Ping = (message: Message) => {
-  message.channel.send('Pong!');
+const Data: ApplicationCommandData = {
+  name: "ping",
+  description: "Pong!と返信します",
+}
+
+const Response = async (interaction: CommandInteraction) => {
+  await interaction.reply("Pong!");
 };
 
-export default Ping;
+export { Data, Response };
