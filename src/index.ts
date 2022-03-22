@@ -40,7 +40,7 @@ client.once('ready', async () => {
 
     // console.log(`Invite Link: ${client.generateInvite({
     //   scopes: ["bot", "applications.commands"],
-    //   permissions: ["SEND_MESSAGES"]
+    //   permissions: ["SEND_MESSAGES", "MANAGE_ROLES"]
     // })}`)
 
     // (await client.guilds.fetch()).forEach(async guild => {
