@@ -15,8 +15,10 @@ const Data: ApplicationCommandData = {
 }
 
 const Response = async (interaction: CommandInteraction, ref: admin.database.Reference) => {
+  // Databaseから全ユーザーのデータを取得
   ref.once('value').then(async snapshot => {
     const json = snapshot.toJSON() as Members;
+    // 各ユーザーに対して処理
     for (const item in json) {
       const year = json[item].year;
       const grade = CalculateGrade(year);

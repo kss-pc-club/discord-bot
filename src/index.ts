@@ -5,8 +5,10 @@ import * as Ping from './commands/ping'
 import * as Register from './commands/register'
 import * as Update from './commands/update'
 
+// .envファイルを読み込む
 dotenv.config();
 
+// Firebaseを初期化する
 admin.initializeApp({
   credential: admin.credential.cert({
     projectId: process.env.FIREBASE_PROJECT_ID,
@@ -16,9 +18,11 @@ admin.initializeApp({
   databaseURL: process.env.FIREBASE_REALTIME_DB_URL
 });
 
+// Firebase Databaseも初期化する
 const db = admin.database();
 const ref = db.ref('members');
 
+// Discord.jsのクライアントを作成
 const client = new Client({
   intents: [
     Intents.FLAGS.GUILDS,
@@ -27,6 +31,7 @@ const client = new Client({
   ],
 });
 
+// Discord.jsのクライアントが準備おっけーな時
 client.once('ready', async () => {
   console.log('[LOG] Bot is ready!');
   if (!client.user) {
@@ -34,25 +39,28 @@ client.once('ready', async () => {
   }
   else {
     console.log(`[LOG] Logged in as ${client.user.tag}`);
-
     client.user.setStatus('online');
     // client.user.setActivity('!register', { type: 'PLAYING' });
 
+    // 招待リンクを生成したいときは、以下のコメントを外してください
     // console.log(`Invite Link: ${client.generateInvite({
     //   scopes: ["bot", "applications.commands"],
     //   permissions: ["SEND_MESSAGES", "MANAGE_ROLES"]
     // })}`)
 
+    // 現在このBotが参加しているサーバーとそのIDを表示したいときは、以下のコメントを外してください
     // (await client.guilds.fetch()).forEach(async guild => {
     //   console.log(`${guild.name}: ${guild.id}`);
     // })
 
+    // スラッシュコマンドを登録
     await client.application?.commands.create(Ping.Data, process.env.SERVER_ID)
     await client.application?.commands.create(Register.Data, process.env.SERVER_ID)
     await client.application?.commands.create(Update.Data, process.env.SERVER_ID)
   }
 });
 
+// Databaseに更新があったとき
 ref.on("value",
   snapshot => {
     console.log("[LOG] DB: value changed");
@@ -63,6 +71,7 @@ ref.on("value",
   }
 );
 
+// スラッシュコマンドが実行されたとき
 client.on('interactionCreate', async interaction => {
   if (!interaction.isCommand()) return;
 
@@ -77,4 +86,5 @@ client.on('interactionCreate', async interaction => {
   }
 });
 
+// Discord.jsのクライアントを起動する
 client.login(process.env.TOKEN);
