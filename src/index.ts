@@ -63,16 +63,17 @@ ref.on("value",
   }
 );
 
-client.on('messageCreate', async (message: Message) => {
-  if (message.author.bot) return;
-  if (message.content.startsWith('!ping')) {
-    Ping.Response(message);
+client.on('interactionCreate', async interaction => {
+  if (!interaction.isCommand()) return;
+
+  if (interaction.commandName === "ping") {
+    await Ping.Response(interaction);
   }
-  if (message.content.startsWith('!register')) {
-    Register.Response(message, ref);
+  if (interaction.commandName === "register") {
+    await Register.Response(interaction, ref);
   }
-  if (message.content.startsWith('!update')) {
-    Update.Response(message, ref);
+  if (interaction.commandName === "update") {
+    await Update.Response(interaction, ref);
   }
 });
 

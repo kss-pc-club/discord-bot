@@ -5,8 +5,9 @@ const Data: ApplicationCommandData = {
   description: "Pong!と返信します",
 }
 
-const Response = (message: Message) => {
-  message.channel.send('Pong!');
+const Response = async (interaction: CommandInteraction) => {
+  // to be implemented
+  // message.channel.send('Pong!');
 };
 
 export { Data, Response };
