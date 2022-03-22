@@ -6,7 +6,7 @@ const GetRoleName = (grade: number): string =>
 const CalculateGrade = (enteryear: number): number => {
   const today = new Date();
   const year = today.getFullYear();
-  const month = today.getMonth();  // April is 3
+  const month = today.getMonth() + 1;
   let grade = year - enteryear + 1;
   if (month < 4) {
     grade--;
