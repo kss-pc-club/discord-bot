@@ -17,12 +17,17 @@ const Data: ApplicationCommandData = {
 
 const Response = async (interaction: CommandInteraction, ref: admin.database.Reference) => {
   const enteryear = interaction.options.getInteger("year");
+  // optionsでrequired:trueとしているが、一応チェック
   if (!enteryear) {
+    // ほかの人からは見えない設定
     await interaction.reply({ content: "ERROR! 年度が指定されていません！", ephemeral: true });
   }
   else {
     const grade = CalculateGrade(enteryear);
+    // optionsで2012年以前は入力できないようになっているが、念のため
+    // 未来の年度が入力されたとき（grade<=0）もチェック
     if (enteryear <= 2012 || grade <= 0) {
+      // ほかの人からは見えない設定
       await interaction.reply({ content: "ERROR! 入学年度が不正です！", ephemeral: true });
     }
     else {
