@@ -15,17 +15,16 @@ const Data: ApplicationCommandData = {
 }
 
 const Response = async (interaction: CommandInteraction, ref: admin.database.Reference) => {
-  // to be implemented
-  // ref.once('value').then(snapshot => {
-  //   const json = snapshot.toJSON() as Members;
-  //   for (const item in json) {
-  //     const year = json[item].year;
-  //     const grade = CalculateGrade(year);
-  //     AddGradeRole(message, item, grade);
-  //   }
-  //   message.channel.send('学年を更新しました！');
-  //   console.log('[LOG] Updated grade!');
-  // });
+  ref.once('value').then(async snapshot => {
+    const json = snapshot.toJSON() as Members;
+    for (const item in json) {
+      const year = json[item].year;
+      const grade = CalculateGrade(year);
+      AddGradeRole(interaction, item, grade);
+    }
+    await interaction.reply('学年を更新しました！')
+    console.log('[LOG] Updated grade!');
+  });
 };
 
 export { Data, Response };
