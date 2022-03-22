@@ -1,4 +1,4 @@
-import { Message } from 'discord.js'
+import { ApplicationCommandData, Message } from 'discord.js'
 import admin from 'firebase-admin'
 import { AddGradeRole } from '../utils/role'
 import { CalculateGrade } from '../utils/grade'
@@ -7,6 +7,11 @@ type Members = {
   [userid: string]: {
     year: number
   }
+}
+
+const Data: ApplicationCommandData = {
+  name: "update",
+  description: "学年を最新情報に更新します"
 }
 
 const Response = (message: Message, ref: admin.database.Reference) => {
@@ -22,4 +27,4 @@ const Response = (message: Message, ref: admin.database.Reference) => {
   });
 };
 
-export { Response };
+export { Data, Response };

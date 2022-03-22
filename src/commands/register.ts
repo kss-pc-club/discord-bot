@@ -1,7 +1,12 @@
-import { Message } from 'discord.js'
+import { ApplicationCommandData, Message } from 'discord.js'
 import admin from 'firebase-admin'
 import { GetRoleName, CalculateGrade, GetGeneration } from '../utils/grade'
 import { AddGradeRole } from '../utils/role'
+
+const Data: ApplicationCommandData = {
+  name: "register",
+  description: "各学年のロールを割り振ります"
+}
 
 const Response = (message: Message, ref: admin.database.Reference) => {
   const str = message.content.split(' ');
@@ -36,4 +41,4 @@ const Response = (message: Message, ref: admin.database.Reference) => {
   }
 };
 
-export { Response };
+export { Data, Response };

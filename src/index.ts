@@ -1,4 +1,4 @@
-import { Client, Intents, Message } from 'discord.js'
+import { Client, Intents } from 'discord.js'
 import admin from 'firebase-admin'
 import dotenv from 'dotenv'
 import * as Ping from './commands/ping'
@@ -38,9 +38,18 @@ client.once('ready', async () => {
     client.user.setStatus('online');
     // client.user.setActivity('!register', { type: 'PLAYING' });
 
+    // console.log(`Invite Link: ${client.generateInvite({
+    //   scopes: ["bot", "applications.commands"],
+    //   permissions: ["SEND_MESSAGES"]
+    // })}`)
+
     // (await client.guilds.fetch()).forEach(async guild => {
     //   console.log(`${guild.name}: ${guild.id}`);
     // })
+
+    await client.application?.commands.create(Ping.Data, process.env.SERVER_ID)
+    await client.application?.commands.create(Register.Data, process.env.SERVER_ID)
+    await client.application?.commands.create(Update.Data, process.env.SERVER_ID)
   }
 });
 
