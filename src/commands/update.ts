@@ -12,8 +12,8 @@ type Members = {
 const Response = (message: Message, ref: admin.database.Reference) => {
   ref.once('value').then(snapshot => {
     const json = snapshot.toJSON() as Members;
-    for (let item in json) {
-      const year = json[item]['year'];
+    for (const item in json) {
+      const year = json[item].year;
       const grade = CalculateGrade(year);
       AddGradeRole(message, item, grade);
     }

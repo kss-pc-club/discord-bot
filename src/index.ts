@@ -16,8 +16,8 @@ admin.initializeApp({
   databaseURL: process.env.FIREBASE_REALTIME_DB_URL
 });
 
-let db = admin.database();
-let ref = db.ref('members');
+const db = admin.database();
+const ref = db.ref('members');
 
 const client = new Client({
   intents: [
