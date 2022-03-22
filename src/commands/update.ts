@@ -3,15 +3,16 @@ import admin from 'firebase-admin'
 import { AddGradeRole } from '../utils/role'
 import { CalculateGrade } from '../utils/grade'
 
-const Update = (message: Message, ref: admin.database.Reference) => {
-  type Members = {
-    [userid : string] : {
-      year: number
-    }
+type Members = {
+  [userid: string]: {
+    year: number
   }
+}
+
+const Response = (message: Message, ref: admin.database.Reference) => {
   ref.once('value').then(snapshot => {
     const json = snapshot.toJSON() as Members;
-    for(let item in json) {
+    for (let item in json) {
       const year = json[item]['year'];
       const grade = CalculateGrade(year);
       AddGradeRole(message, item, grade);
@@ -21,4 +22,4 @@ const Update = (message: Message, ref: admin.database.Reference) => {
   });
 };
 
-export default Update;
+export { Response };

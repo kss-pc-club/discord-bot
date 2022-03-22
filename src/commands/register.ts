@@ -3,7 +3,7 @@ import admin from 'firebase-admin'
 import { GetRoleName, CalculateGrade, GetGeneration } from '../utils/grade'
 import { AddGradeRole } from '../utils/role'
 
-const Register = (message: Message, ref: admin.database.Reference) => {
+const Response = (message: Message, ref: admin.database.Reference) => {
   const str = message.content.split(' ');
   if (str.length < 2) {
     message.channel.send('ERROR! 引数が足りません');
@@ -16,7 +16,7 @@ const Register = (message: Message, ref: admin.database.Reference) => {
     else {
       let child = ref.child(`${message.author.id}`);
       child.set({
-        'year': enteryear 
+        'year': enteryear
       });
 
       const grade = CalculateGrade(enteryear);
@@ -26,4 +26,4 @@ const Register = (message: Message, ref: admin.database.Reference) => {
   }
 };
 
-export default Register;
+export { Response };

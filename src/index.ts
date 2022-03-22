@@ -1,9 +1,9 @@
 import { Client, Intents, Message } from 'discord.js'
 import admin from 'firebase-admin'
 import dotenv from 'dotenv'
-import Ping from './commands/ping'
-import Register from './commands/register'
-import Update from './commands/update'
+import * as Ping from './commands/ping'
+import * as Register from './commands/register'
+import * as Update from './commands/update'
 
 dotenv.config();
 
@@ -27,7 +27,7 @@ const client = new Client({
   ],
 });
 
-client.once('ready', () => {
+client.once('ready', async () => {
   console.log('[LOG] Bot is ready!');
   if (!client.user) {
     console.warn("[WARN] Client user is undefined");
@@ -37,27 +37,33 @@ client.once('ready', () => {
 
     client.user.setStatus('online');
     // client.user.setActivity('!register', { type: 'PLAYING' });
+
+    // (await client.guilds.fetch()).forEach(async guild => {
+    //   console.log(`${guild.name}: ${guild.id}`);
+    // })
   }
 });
 
-ref.on("value", snapshot => {
+ref.on("value",
+  snapshot => {
     console.log("[LOG] DB: value changed");
     console.log(snapshot.val());
-  }, 
+  },
   (errorObject: admin.FirebaseError) => {
     console.log("[LOG] DB: failed " + errorObject.code);
-});
+  }
+);
 
 client.on('messageCreate', async (message: Message) => {
   if (message.author.bot) return;
   if (message.content.startsWith('!ping')) {
-    Ping(message);
+    Ping.Response(message);
   }
   if (message.content.startsWith('!register')) {
-    Register(message, ref);
+    Register.Response(message, ref);
   }
   if (message.content.startsWith('!update')) {
-    Update(message, ref);
+    Update.Response(message, ref);
   }
 });
 
