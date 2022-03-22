@@ -5,7 +5,14 @@ import { AddGradeRole } from '../utils/role'
 
 const Data: ApplicationCommandData = {
   name: "register",
-  description: "各学年のロールを割り振ります"
+  description: "各学年のロールを割り振ります",
+  options: [{
+    type: "INTEGER",
+    name: "year",
+    description: "入学した年度",
+    required: true,
+    minValue: 2013
+  }]
 }
 
 const Response = async (interaction: CommandInteraction, ref: admin.database.Reference) => {
