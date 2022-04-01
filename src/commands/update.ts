@@ -15,6 +15,8 @@ const Data: ApplicationCommandData = {
 }
 
 const Response = async (interaction: CommandInteraction, ref: admin.database.Reference) => {
+  await interaction.deferReply();
+
   // Databaseから全ユーザーのデータを取得
   ref.once('value').then(async snapshot => {
     const json = snapshot.toJSON() as Members;
@@ -24,7 +26,7 @@ const Response = async (interaction: CommandInteraction, ref: admin.database.Ref
       const grade = CalculateGrade(year);
       await AddGradeRole(interaction, item, grade);
     }
-    await interaction.reply('学年を更新しました！')
+    await interaction.editReply("学年を更新しました！");
     console.log('[LOG] Updated grade!');
   });
 };
