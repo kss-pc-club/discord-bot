@@ -7,10 +7,10 @@ import { GetRoleName } from './grade'
  * @param target - 振り分け対象のUserID
  * @param grade - 振り分け対象の学年
  */
-const AddGradeRole = (interaction: CommandInteraction, target: string, grade: number) => {
+const AddGradeRole = async (interaction: CommandInteraction, target: string, grade: number) => {
   const roleName = GetRoleName(grade);
-  const newRole = interaction.guild?.roles.cache.find(role => role.name === roleName);
-  const targetDetail = interaction.guild?.members.cache.get(target);
+  const newRole = await interaction.guild?.roles.fetch().then(val => val.find(role => role.name === roleName));
+  const targetDetail = await interaction.guild?.members.fetch().then(val => val.get(target));
   // 対象のUserが存在しない場合は何もしない
   if (!targetDetail) {
     console.warn(`[WARN] ${target} is not here!`);

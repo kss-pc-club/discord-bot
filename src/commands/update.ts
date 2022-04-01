@@ -22,7 +22,7 @@ const Response = async (interaction: CommandInteraction, ref: admin.database.Ref
     for (const item in json) {
       const year = json[item].year;
       const grade = CalculateGrade(year);
-      AddGradeRole(interaction, item, grade);
+      await AddGradeRole(interaction, item, grade);
     }
     await interaction.reply('学年を更新しました！')
     console.log('[LOG] Updated grade!');
