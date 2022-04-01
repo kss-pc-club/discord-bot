@@ -54,9 +54,8 @@ client.once('ready', async () => {
     // })
 
     // スラッシュコマンドを登録
-    await client.application?.commands.create(Ping.Data, process.env.SERVER_ID)
-    await client.application?.commands.create(Register.Data, process.env.SERVER_ID)
-    await client.application?.commands.create(Update.Data, process.env.SERVER_ID)
+    if (process.env.SERVER_ID)
+      await client.application?.commands.set([Ping.Data, Register.Data, Update.Data], process.env.SERVER_ID);
   }
 });
 
