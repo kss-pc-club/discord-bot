@@ -10,6 +10,11 @@ KSS PC Club Discord サーバー用の bot です。
 3. Create `.env` file with the following content:
     ```
     TOKEN=<YOUR TOKEN HERE>
+    SERVER_ID=<GUILD ID HERE>
+    FIREBASE_PROJECT_ID=<FIREBASE PROJECT ID HERE>
+    FIREBASE_CLIENT_EMAIL=<FIREBASE CLIENT EMAIL HERE>
+    FIREBASE_REALTIME_DB_URL=<FIREBASE RDB URL HERE>
+    FIREBASE_PRIVATE_KEY=<FIREBASE TOKEN HERE>
     ```
 4. Install dependencies
     ```
