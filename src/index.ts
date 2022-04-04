@@ -54,8 +54,10 @@ client.once('ready', async () => {
     // })
 
     // スラッシュコマンドを登録
-    if (process.env.SERVER_ID)
-      await client.application?.commands.set([Ping.Data, Register.Data, Update.Data], process.env.SERVER_ID);
+    if (process.env.SERVER_ID) {
+      const guild = await client.guilds.cache.get(process.env.SERVER_ID);
+      await guild?.commands.set([Ping.Data, Register.Data, Update.Data]);
+    }
   }
 });
 
