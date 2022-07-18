@@ -4,6 +4,7 @@ import dotenv from 'dotenv'
 import * as Ping from './commands/ping'
 import * as Register from './commands/register'
 import * as Update from './commands/update'
+import * as Book from './commands/book'
 
 // .envファイルを読み込む
 dotenv.config();
@@ -55,7 +56,12 @@ client.once('ready', async () => {
 
     // スラッシュコマンドを登録
     if (process.env.SERVER_ID) {
-      await client.application?.commands.set([Ping.Data, Register.Data, Update.Data], process.env.SERVER_ID);
+      await client.application?.commands.set([
+        Ping.Data,
+        Register.Data,
+        Update.Data,
+        Book.Data
+      ], process.env.SERVER_ID);
     }
   }
 });
@@ -83,6 +89,9 @@ client.on('interactionCreate', async interaction => {
   }
   if (interaction.commandName === "update") {
     await Update.Response(interaction, ref);
+  }
+  if (interaction.commandName === "book") {
+    await Book.Response(interaction, process.env.BOOK_DB_URL);
   }
 });
 
