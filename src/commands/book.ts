@@ -14,9 +14,15 @@ const Data: ApplicationCommandData = {
 
 const Response = async (interaction: CommandInteraction, dbUrl: any) => {
   const tag = interaction.options.getString("tag");
-  const url = dbUrl+`?tag=${tag}`;
+  if (!tag) {
+    // ほかの人からは見えない設定
+    await interaction.reply({ content: "ERROR! タグが指定されていません！", ephemeral: true });
+    return;
+  }
+  const url = dbUrl+`?tag=${encodeURIComponent(tag)}`;
   await interaction.deferReply();
   const response = await fetch(url);
+  // レスポンスがきちんと返ってきた
   if (response.ok) {
     const books = await response.json() as Array<string>;
     if (books.length == 0) {
