@@ -38,7 +38,7 @@ const Response = async (interaction: CommandInteraction, dbUrl: any) => {
         .setTitle(`${books.length}冊見つかりました！`)
         .setTimestamp();
       books.forEach(book => embed.addFields(
-        { name: book, value: '--' },
+        { name: book, value: '\u200b' },
       ));
       await interaction.editReply({embeds: [embed]});
     }
