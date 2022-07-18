@@ -22,7 +22,7 @@ const Response = async (interaction: CommandInteraction, dbUrl: any) => {
     if (books.length == 0) {
       const embed = new MessageEmbed()
         .setColor('#2b3840')
-        .setTitle("見つかりませんでした")
+        .setTitle('見つかりませんでした')
         .setTimestamp();
       await interaction.editReply({embeds: [embed]});
     }
